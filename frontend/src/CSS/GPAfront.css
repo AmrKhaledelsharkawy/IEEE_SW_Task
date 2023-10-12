@@ -1,0 +1,85 @@
+/* GPA Calculator CSS */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    flex-direction: column;
+  }
+  
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #001f44; /* Dark blue color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background: #ffca28; /* Yellow color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    color: #001f44; /* Dark blue text color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  button:hover {
+    background: #001f44; /* Dark blue color on hover */
+    color: #ffca28; /* Yellow text color on hover */
+  }
+  
+  div {
+    margin-top: 20px;
+  }
+  
+  /* Style for course elements */
+  .course {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    background: #ffca28; /* Yellow background */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #001f44; /* Dark blue text color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .course button {
+    background: #ff6347; /* Tomato red color */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 16px;
+  }
+  
+  .course button:hover {
+    background: #bd3f32; /* Darker red color on hover */
+  }
+  .GPA {
+    font-size: 24px; /* Set the font size to your desired size */
+    font-family: 'LuxuryFont', sans-serif; /* Use a luxurious font or specify your choice */
+    font-weight: bold; /* Make the text bold */
+  }
+  
+  /* Course (C) style */
+  .C {
+    font-size: 18px; /* Set the font size to your desired size */
+    font-family: 'LuxuryFont', sans-serif; /* Use a luxurious font or specify your choice */
+    font-weight: bold; /* Make the text bold */
+  }

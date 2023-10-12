@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import '../CSS/GPAfront.css'
 
 function GPACalculator() {
   const [courses, setCourses] = useState([]);
@@ -16,12 +16,31 @@ function GPACalculator() {
     }
   };
 
-  const calculateGPA = async () => {
+  const removeCourse = (index) => {
+    const updatedCourses = [...courses];
+    updatedCourses.splice(index, 1);
+    setCourses(updatedCourses);
+    calculateGPA(updatedCourses); // Recalculate GPA after removing the course
+  };
+
+  const calculateGPA = async (updatedCourses) => {
     try {
-        console.log(courses[0])
-      const response = await axios.post('/api/gpa/calculateGPA',  courses[0] );
-      const { gpa } = response.data;
-      console.log(gpa)
+      const data = { courses: updatedCourses };
+
+      const response = await fetch('/calculateGPA/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      const { gpa } = responseData;
       setGPA(gpa);
     } catch (error) {
       console.error('Error calculating GPA:', error);
@@ -48,13 +67,14 @@ function GPACalculator() {
       </div>
       <div>
         {courses.map((course, index) => (
-          <div key={index}>
+          <div key={index} className='C'>
             Course {index + 1}: {course.weight} hours, Grade: {course.grade}
+            <button onClick={() => removeCourse(index)}>Delete Course</button>
           </div>
         ))}
       </div>
-      <button onClick={calculateGPA}>Calculate GPA</button>
-      {gpa !== null && <div>GPA: {gpa}</div>}
+      <button onClick={() => calculateGPA(courses)}>Calculate GPA</button>
+      {gpa !== null && <div className='GPA'>GPA: {gpa}</div>}
     </div>
   );
 }

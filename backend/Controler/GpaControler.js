@@ -1,62 +1,57 @@
-const express = require('express')
+const express = require('express');
 
 const calculateGPA = async (req, res) => {
     try {
-      // Retrieve the course data from the request body
-      const { courses } = req.body;
-  
-      // Validate the input - ensure it's an array of courses
-      if (!Array.isArray(courses)) {
-        return res.status(400).json({ message: 'Invalid input. Expecting an array of courses.' });
-      }
-  
-      // Define your GPA scale mapping for German grading
-      const gpaScale = {
-        'A+': 1.0,
-        'A': 1.3,
-        'A-': 1.7,
-        'B+': 2.0,
-        'B': 2.3,
-        // Add more grades and their corresponding values as needed.
-      };
-  
-      // Initialize variables for GPA calculation
-      let totalWeight = 0;
-      let weightedGradeSum = 0;
-  
-      // Iterate through the course data and calculate the weighted GPA
-      for (const course of courses) {
-        const { weight, grade } = course;
-  
-        // Check if the provided grade is in the GPA scale mapping
-        if (gpaScale[grade]) {
-          totalWeight += weight;
-          weightedGradeSum += weight * gpaScale[grade];
-        } else {
-          // Handle cases where the grade is not in the GPA scale
-          return res.status(400).json({ message: 'Invalid grade found in the course data.' });
+        const { courses } = req.body;
+
+        if (!Array.isArray(courses)) {
+            return res.status(400).json({ message: 'Invalid input data. Please provide an array of courses.' });
         }
-      }
-  
-      if (totalWeight === 0) {
-        return res.status(400).json({ message: 'No valid courses found for GPA calculation.' });
-      }
-  
-      // Calculate the GPA
-      const gpa = weightedGradeSum / totalWeight;
-  
-      // Round the GPA to two decimal places
-      const roundedGPA = gpa.toFixed(2);
-  
-      // Return the calculated GPA as a response
-      res.status(200).json({ gpa: roundedGPA });
+
+        const gpaScale = {
+            'A+': 0.7,
+            'A': 1,
+            'A-': 1.3,
+            'B+': 1.7,
+            'B': 2.0,
+            'B-': 2.3,
+            'C+': 2.7,
+            'C': 3.0,
+            'C-': 3.3,
+            'D+': 3.7,
+            'D': 4,
+            'F': 5
+            // Add more grades and their corresponding values as needed.
+        };
+
+        let totalWeight = 0;
+        let weightedGradeSum = 0;
+
+        for (const course of courses) {
+            const { weight, grade } = course;
+
+            if (gpaScale[grade]) {
+                totalWeight += weight;
+                weightedGradeSum += weight * gpaScale[grade];
+            } else {
+                return res.status(400).json({ message: 'Invalid grade found in the course data. Please provide valid grades.' });
+            }
+        }
+
+        if (totalWeight === 0) {
+            return res.status(400).json({ message: 'No valid courses found for GPA calculation.' });
+        }
+
+        const gpa = weightedGradeSum / totalWeight;
+        const roundedGPA = gpa.toFixed(2);
+
+        res.status(200).json({ gpa: roundedGPA });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+        console.error(error);
+        res.status(500).json({ message: 'An internal server error occurred. Please try again later.' });
     }
-  };
-  
-  module.exports = {
+};
+
+module.exports = {
     calculateGPA,
-  };
-  
+};
