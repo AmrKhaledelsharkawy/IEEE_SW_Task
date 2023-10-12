@@ -1,5 +1,5 @@
 import { BrowserRouter, Link, Routes } from "react-router-dom"
-import "../CSS/Navbar.css"; // Import the CSS file
+import "../CSS/Navbar.css"; 
 
 const Navbar =()=>{
 
